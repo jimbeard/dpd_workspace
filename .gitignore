@@ -1,0 +1,5 @@
+# os
+**/.DS_Store
+
+# ignore temp directories
+/workspace/storage/*

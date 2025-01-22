@@ -1,0 +1,30 @@
+version: '3.4'
+
+networks:
+  rc_network:
+    name: riskcare
+
+services:
+  nginx:
+    build: ../nginx
+    container_name: nginx
+    ports:
+      - 1337:7331
+    networks:
+      - rc_network
+    depends_on:
+      - data-loader
+
+  data-loader:
+    build: ../../dpd_data_loader
+    deploy:
+      replicas: 3
+    networks:
+      - rc_network
+    ports:
+      - 5002
+    volumes:
+      - ./storage:/home/appuser/storage
+    environment:
+      - SEARCH_QUERY=funny cat photo
+      - TARGET_DIR=/home/appuser/storage/
